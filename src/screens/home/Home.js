@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Component} from 'react';
-import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView} from 'react-native';
+import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight} from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,6 +8,7 @@ import axios from 'axios'; //Only import if using api
 import {addData} from "../../action";
 import { ListItem, Avatar } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
 
 // export default class Home extends Component {
 //     constructor(props) {
@@ -25,14 +26,18 @@ import TouchableScale from 'react-native-touchable-scale'; // https://github.com
 export default function Home(props) {
   const list = [
     {
+      id: "1",
       name: 'Amy Farha',
       avatar_url: 'https://i1.sndcdn.com/artworks-000097703405-l3r8n9-t500x500.jpg',
-      subtitle: 'Vice President'
+      subtitle: 'Vice President',
+      text: "List Pokemon"
     },
     {
+      id: "2",
       name: 'Chris Jackson',
       avatar_url: 'https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png',
-      subtitle: 'Vice Chairman'
+      subtitle: 'Vice Chairman',
+      text: "List Item"
     },
   ];
 
@@ -43,6 +48,52 @@ export default function Home(props) {
         <View
           style={styles.borderTitle}>
         </View>
+      </View>
+      <View style={styles.itemContainer}>
+        {
+            list.map((l, i) => (
+            //   <ListItem
+            //   Component={TouchableScale}
+            //   friction={90} //
+            //   tension={100} // These props are passed to the parent component (here TouchableScale)
+            //   activeScale={0.95} //
+            //   linearGradientProps={{
+            //     colors: ['#FF9800', '#F44336'],
+            //     start: { x: 1, y: 0 },
+            //     end: { x: 0.2, y: 0 },
+            //   }}
+            //   ViewComponent={LinearGradient} // Only if no expo
+            // >
+            //   <Avatar rounded source={{ uri: l.avatar_url }} />
+            //   <ListItem.Content>
+            //     <ListItem.Title style={{ color: 'white', fontWeight: 'bold' }}>
+            //       Chris Jackson
+            //     </ListItem.Title>
+            //     <ListItem.Subtitle style={{ color: 'white' }}>
+            //       Vice Chairman
+            //     </ListItem.Subtitle>
+            //   </ListItem.Content>
+            //   <ListItem.Chevron color="white" />
+            // </ListItem>
+            <View
+              style={styles.itemOption}
+              key={i}
+              >
+                <TouchableHighlight>
+                  <ListItem
+                    Component={TouchableScale}
+                    friction={90} //
+                    tension={100} // These props are passed to the parent component (here TouchableScale)
+                    activeScale={0.95} //
+                    >
+                      <ListItem.Content>
+                      <ListItem.Title>{l.text}</ListItem.Title>
+                      </ListItem.Content>
+                  </ListItem>
+                </TouchableHighlight>
+            </View>
+            ))
+        }
       </View>
     </SafeAreaView>
   );
@@ -166,10 +217,19 @@ const styles = StyleSheet.create({
       fontSize: 24,
       color: '#6F6C6C',
     },
+    itemContainer: {
+      marginTop: 10,
+      marginRight: 24,
+      marginLeft: 24,
+      marginBottom: 10,
+    },
     itemOption: {
       marginTop: 10,
       marginRight: 24,
       marginLeft: 24,
       marginBottom: 10,
+      borderColor: "#6F6C6C",
+      borderWidth: 1,
+      opacity: 0.5,
     }
 });
