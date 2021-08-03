@@ -1,14 +1,17 @@
 import React, {useEffect, useState, Component} from 'react';
 import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight} from 'react-native';
-
 import { useDispatch, useSelector } from 'react-redux';
+import { ListItem, Avatar } from 'react-native-elements'
+import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import axios from 'axios'; //Only import if using api
 
 import {addData} from "../../action";
-import { ListItem, Avatar } from 'react-native-elements'
-import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
-import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
+import ItemList from '../item_list/ItemList';
+import PokemonList from '../pokemon_list/PokemonList';
 
 // export default class Home extends Component {
 //     constructor(props) {
@@ -23,7 +26,8 @@ import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
 //     }
 // }
 
-export default function Home(props) {
+// function Home(props) {
+const Home = ({ navigation }) => {
   const list = [
     {
       id: "1",
@@ -233,3 +237,5 @@ const styles = StyleSheet.create({
       opacity: 0.5,
     }
 });
+
+export default Home;
