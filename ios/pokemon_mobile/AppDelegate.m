@@ -43,9 +43,6 @@ static void InitializeFlipper(UIApplication *application) {
   #if RCT_DEV
     [bridge moduleForClass:[RCTDevLoadingView class]];
   #endif
-    RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                    moduleName:@"Test"
-                                              initialProperties:nil];
   // TILL HERE
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge

@@ -32,16 +32,10 @@ const Home = ({ navigation }) => {
   const list = [
     {
       id: "1",
-      name: 'Amy Farha',
-      avatar_url: 'https://i1.sndcdn.com/artworks-000097703405-l3r8n9-t500x500.jpg',
-      subtitle: 'Vice President',
       text: "List Pokemon"
     },
     {
       id: "2",
-      name: 'Chris Jackson',
-      avatar_url: 'https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png',
-      subtitle: 'Vice Chairman',
       text: "List Item"
     },
   ];
@@ -81,15 +75,16 @@ const Home = ({ navigation }) => {
             //   <ListItem.Chevron color="white" />
             // </ListItem>
             <View
-              style={styles.itemOption}
               key={i}
               >
-                <TouchableHighlight>
+                <TouchableHighlight
+                  >
                   <ListItem
                     Component={TouchableScale}
                     friction={90} //
                     tension={100} // These props are passed to the parent component (here TouchableScale)
                     activeScale={0.95} //
+                    style={styles.itemOption}
                     >
                       <ListItem.Content>
                       <ListItem.Title>{l.text}</ListItem.Title>
@@ -231,12 +226,18 @@ const styles = StyleSheet.create({
     },
     itemOption: {
       marginTop: 10,
-      marginRight: 24,
-      marginLeft: 24,
-      marginBottom: 10,
       borderColor: "#6F6C6C",
       borderWidth: 1,
-      opacity: 0.5,
+      borderRadius: 10,
+      overflow: 'hidden',
+      shadowOffset: {
+        height: 1,
+        width: 1
+      },
+      shadowRadius: 2,
+      shadowColor: '#000000',
+      elevation: 4,
+      opacity: 0.8,
     }
 });
 
