@@ -12,6 +12,8 @@ target 'pokemon_mobile' do
     :hermes_enabled => false
   )
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'pokemon_mobileTests' do
     inherit! :complete
     # Pods for testing

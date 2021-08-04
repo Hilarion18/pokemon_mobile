@@ -12,7 +12,7 @@ export default class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <NavigationContainer>
+                {/* <NavigationContainer>
                     <Stack.Navigator>
                         <Stack.Screen
                             name="HomeScreen"
@@ -25,8 +25,8 @@ export default class App extends Component {
                             }}
                         />
                     </Stack.Navigator>
-                </NavigationContainer>
-                {/* <Home/> */}
+                </NavigationContainer> */}
+                <Home/>
             </Provider>
         );
     }
