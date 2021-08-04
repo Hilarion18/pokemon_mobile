@@ -6,7 +6,8 @@ import TouchableScale from 'react-native-touchable-scale'; // https://github.com
 import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import IconIonIcon from 'react-native-vector-icons/Ionicons'
 import axios from 'axios'; //Only import if using api
 
 import {addData} from "../../action";
@@ -44,7 +45,6 @@ const Home = ({ navigation }) => {
       text: "List Item"
     },
   ];
-  const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
   return (
     <SafeAreaView>
@@ -94,6 +94,7 @@ const Home = ({ navigation }) => {
                       <ListItem.Content>
                       <ListItem.Title>{l.text}</ListItem.Title>
                       </ListItem.Content>
+                      <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
                   </ListItem>
                 </TouchableHighlight>
             </View>
