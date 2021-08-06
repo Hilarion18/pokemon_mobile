@@ -9,66 +9,37 @@ import { createStackNavigator } from '@react-navigation/stack';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconIonIcon from 'react-native-vector-icons/Ionicons'
 import axios from 'axios'; //Only import if using api
+import { connect } from 'react-redux'
 
 import {addData} from "../../action";
 import { addPokemonList } from '../../models/pokemon_list/actions';
-// import ItemList from '../item_list/ItemList';
-// import PokemonList from '../pokemon_list/PokemonList';
+import { GET_ALL_POKEMON_LIST } from '../../models/pokemon_list/actions';
 
-// var isHidden = true;
 
-// // export default class PokemonListScreen extends Component {
-// //     constructor(props) {
-// //         super(props)
-// //     }
-// //     render() {
-// //         return (
-// //             <SafeAreaView>
-// //                 <Text>Hello</Text>
-// //             </SafeAreaView>
-// //         )
-// //     }
-// // }
+const mapStateToProps = (state, props) => {
+  console.log("== mapStateToProps: ", state.pokemons);
+  const pokemonList = state.pokemons;
+  console.log("== mapStateToProps2: ", pokemonList);
+  return pokemonList;
+}
 
-// // function PokemonListScreen(props) {
-const PokemonListScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const list = [
-    {
-      id: "1",
-      text: "List Pokemon"
-    },
-    {
-      id: "2",
-      text: "List Item"
-    },
-  ];
-  //1 - DECLARE VARIABLES
-  const [isFetching, setIsFetching] = useState(false);
-  const [pokemons, setPokemons] = useState([]);
-  //Access Redux Store State
-  const pokemonListReducer = useSelector((state) => state.pokemonListReducer);
-  const pokemonLists = pokemonListReducer;
-  
+const mapDispatchToProps = (dispatch, props) => ({
+  getAllPokemonList: () => {
+    dispatch({
+      type: GET_ALL_POKEMON_LIST,
+      payload: [],
+    });
+  },
+});
 
-  //==================================================================================================
-
-  //2 - MAIN CODE BEGINS HERE
-  useEffect(() => getPokemonList(), []);
-
-  const getPokemonList = () => {
-    setIsFetching(true);
-    let url = "https://pokeapi.co/api/v2/pokemon/";
-    axios.get(url)
-      .then(res => {
-        // console.log("axios data 1: ", res.data.results)
-        setPokemons(res.data.results);
-        dispatch(addPokemonList(res.data.results));
-      })
-      .catch(error => alert(error.message))
-      .finally(() => setIsFetching(false));
-  };
+const PokemonListView = ({ pokemons, pokemonList, payload, getAllPokemonList, navigation }) => {
   console.log("== pokemons: ", pokemons)
+  console.log("== pokemons: ", pokemonList)
+  console.log("== pokemons: ", payload)
+
+  useEffect(() => {
+    getAllPokemonList();
+  }, [getAllPokemonList]);
 
   return (
     <SafeAreaView>
@@ -77,9 +48,9 @@ const PokemonListScreen = ({ navigation }) => {
           style={styles.borderTitle}>
         </View>
       </View>
-      <View style={styles.itemContainer}>
+      {/* <View style={styles.itemContainer}>
         {
-            pokemons.map((l, i) => (
+            pokemons.pokemonList.map((l, i) => (
             <View
               key={i}
               >
@@ -103,10 +74,94 @@ const PokemonListScreen = ({ navigation }) => {
             </View>
             ))
         }
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }
+
+PokemonListScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PokemonListView)
+
+// // // function PokemonListScreen(props) {
+// const PokemonListScreen = ({ navigation }) => {
+//   const dispatch = useDispatch();
+//   const list = [
+//     {
+//       id: "1",
+//       text: "List Pokemon"
+//     },
+//     {
+//       id: "2",
+//       text: "List Item"
+//     },
+//   ];
+//   //1 - DECLARE VARIABLES
+//   const [isFetching, setIsFetching] = useState(false);
+//   const [pokemons, setPokemons] = useState([]);
+//   //Access Redux Store State
+//   const pokemonListReducer = useSelector((state) => state.pokemonListReducer);
+//   const pokemonLists = pokemonListReducer;
+  
+
+//   //==================================================================================================
+
+//   //2 - MAIN CODE BEGINS HERE
+//   useEffect(() => getPokemonList(), []);
+
+//   const getPokemonList = () => {
+//     setIsFetching(true);
+//     let url = "https://pokeapi.co/api/v2/pokemon/";
+//     axios.get(url)
+//       .then(res => {
+//         console.log("axios data 1: ", res.data.results)
+//         setPokemons(res.data.results);
+//         dispatch(addPokemonList(res.data.results));
+//       })
+//       .catch(error => alert(error.message))
+//       .finally(() => setIsFetching(false));
+//   };
+//   console.log("== pokemons: ", pokemons)
+//   console.log("== pokemons 2: ", pokemonLists)
+
+//   return (
+//     <SafeAreaView>
+//       <View>
+//         <View
+//           style={styles.borderTitle}>
+//         </View>
+//       </View>
+//       <View style={styles.itemContainer}>
+//         {
+//             pokemons.map((l, i) => (
+//             <View
+//               key={i}
+//               >
+//                 <TouchableHighlight
+//                   >
+//                   <ListItem
+//                     Component={TouchableScale}
+//                     friction={90} //
+//                     tension={100} // These props are passed to the parent component (here TouchableScale)
+//                     activeScale={0.95} //
+//                     style={styles.itemOption}
+//                     // onPress={() =>
+//                     //   l.text === "List Pokemon" ? navigation.navigate('PokemonList') : navigation.navigate('ItemList') }
+//                     >
+//                       <ListItem.Content>
+//                       <ListItem.Title>{l.name}</ListItem.Title>
+//                       </ListItem.Content>
+//                       <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
+//                   </ListItem>
+//                 </TouchableHighlight>
+//             </View>
+//             ))
+//         }
+//       </View>
+//     </SafeAreaView>
+//   );
+// }
 
 // function PokemonListScreen(props) {
 //     const dispatch = useDispatch();

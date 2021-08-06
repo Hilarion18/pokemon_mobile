@@ -1,27 +1,36 @@
-import {takeEvery, put} from 'redux-saga/effects';
+import {takeEvery, put, call} from 'redux-saga/effects';
 import {
   GET_ALL_USER_INFO_REQUEST,
   GET_ALL_USER_INFO_REQUEST_SUCCESS,
 } from './actions';
+import {queryApi} from '../query-api';
 
-function* handler() {
+function* userSaga() {
   yield takeEvery(GET_ALL_USER_INFO_REQUEST, getAllUserInfo);
 }
 
 function* getAllUserInfo(action) {
+  console.log("action: ", action)
   try {
+    const posts = yield call(queryApi, {
+      endpoint: '',
+      method: 'GET',
+    });
+    console.log("== posts:", posts)
+
     // API call
     yield put({
       type: GET_ALL_USER_INFO_REQUEST_SUCCESS,
       payload: {
         id: 'id1',
-        name: 'Michael',
+        name: posts[0].body,
         email: 'anothertestemail@test.com',
       },
     });
   } catch (err) {
+    console.log(err);
     // Handle error
   }
 }
 
-export {handler};
+export {userSaga};

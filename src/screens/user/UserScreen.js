@@ -16,9 +16,11 @@ import {addData} from "../../action";
 
 import {connect} from 'react-redux';
 import {GET_ALL_USER_INFO_REQUEST} from '../../models/user/actions';
+import { GET_ALL_POKEMON_LIST } from '../../models/pokemon_list/actions';
 
 const mapStateToProps = (state, props) => {
   const {id, name, email} = state.user;
+  console.log("== mapStateToProps: ", name)
 
   return {id, name, email};
 };
@@ -30,14 +32,22 @@ const mapDispatchToProps = (dispatch, props) => ({
       payload: {},
     });
   },
+  getAllPokemonList: () => {
+    dispatch({
+      type: GET_ALL_POKEMON_LIST,
+      payload: [],
+    });
+  },
 });
 
-const UserView = ({id, name, email, getAllUserInfo, navigation}) => {
+const UserView = ({id, name, email, getAllUserInfo, getAllPokemonList, navigation}) => {
   // navigation.navigate('Login')
+  console.log("== name", name);
 
   useEffect(() => {
     getAllUserInfo();
-  }, [getAllUserInfo]);
+    getAllPokemonList();
+  }, [getAllUserInfo, getAllPokemonList]);
 
   return (
     <View>
