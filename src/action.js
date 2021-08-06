@@ -1,6 +1,6 @@
-export const DATA_AVAILABLE = 'DATA_AVAILABLE';
+export const DUMMY_DATA = 'DUMMY_DATA';
 
 export const addData = (data) => ({
-    type: DATA_AVAILABLE,
+    type: DUMMY_DATA,
     data
 });

@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Component} from 'react';
-import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight} from 'react-native';
+import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight, Animated} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
@@ -12,7 +12,8 @@ import axios from 'axios'; //Only import if using api
 
 import {addData} from "../../action";
 import ItemList from '../item_list/ItemList';
-import PokemonList from '../pokemon_list/PokemonList';
+import PokemonListScreen from '../pokemon_list/PokemonList';
+
 
 // export default class Home extends Component {
 //     constructor(props) {
@@ -32,18 +33,25 @@ const Home = ({ navigation }) => {
   const list = [
     {
       id: "1",
-      text: "List Pokemon"
+      text: "List Pokemon",
+      navigation: "PokemonList"
     },
     {
       id: "2",
-      text: "List Item"
+      text: "List Item",
+      navigation: "ItemList"
+    },
+    {
+      id: "3",
+      text: "User",
+      navigation: "UserScreen"
     },
   ];
 
   return (
     <SafeAreaView>
       <View>
-      <Text style={styles.titleHead} >Pokemon App</Text>
+      {/* <Text style={styles.titleHead} >Pokemon App</Text> */}
         <View
           style={styles.borderTitle}>
         </View>
@@ -85,6 +93,8 @@ const Home = ({ navigation }) => {
                     tension={100} // These props are passed to the parent component (here TouchableScale)
                     activeScale={0.95} //
                     style={styles.itemOption}
+                    onPress={() =>
+                      navigation.navigate(l.navigation)}
                     >
                       <ListItem.Content>
                       <ListItem.Title>{l.text}</ListItem.Title>

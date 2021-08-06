@@ -1,23 +1,14 @@
 import { combineReducers } from 'redux';
-import {dummyReducer} from './reducers/dummyData'
-
-import { DATA_AVAILABLE } from "./action" //Import the actions types constant we defined in our actions
-
-let dataState = { data: [] };
-
-const dataReducer = (state = dataState, action) => {
-    switch (action.type) {
-        case DATA_AVAILABLE:
-            return {...state, data: action.data};
-        default:
-            return state;
-    }
-};
+// import {dummyReducer} from './reducers/dummyData'
+import { pokemonListReducer } from './models/pokemon_list/reducers';
+import {reducer as userReducer} from './models/user/reducers';
 
 // Combine all the reducers
 const rootReducer = combineReducers({
-    dummyReducer
-    // ,[ANOTHER REDUCER], [ANOTHER REDUCER] ....
+  user: userReducer,
+  // dummyReducer,
+  // pokemonListReducer
+  // ,[ANOTHER REDUCER], [ANOTHER REDUCER] ....
 })
 
 export default rootReducer;
