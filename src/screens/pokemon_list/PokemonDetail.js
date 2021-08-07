@@ -82,6 +82,7 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
               </Text>
             </View>
       </View>
+      
       <View style={styles.experience}>
         <Text style={styles.contentDetail}>
           Experience: { pokemon.base_experience } %
