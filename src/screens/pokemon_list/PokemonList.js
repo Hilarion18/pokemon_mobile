@@ -68,14 +68,6 @@ const PokemonListView = ({ pokemonList, getAllPokemonList, navigation }) => {
                           name: l.name,
                           text: "text"
                         });
-                        // navigation.push('PokemonDetail', {
-                        //   component: {
-                        //     name: 'PokemonDetail',
-                        //     passProps: {
-                        //       name: l.name
-                        //     }
-                        //   }
-                        // })
                       }}
                       // onPress={() =>
                       //   l.text === "List Pokemon" ? navigation.navigate('PokemonList') : navigation.navigate('ItemList') }

@@ -82,7 +82,7 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
               </Text>
             </View>
       </View>
-      
+
       <View style={styles.experience}>
         <Text style={styles.contentDetail}>
           Experience: { pokemon.base_experience } %
@@ -94,9 +94,11 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
       <View style={styles.ridesFriends}>
         <View>
           <Text style={styles.numbers}>{pokemon.weight}kg</Text>
-          <Text style={styles.mainDetail}>
-            WEIGHT
-          </Text>
+          <View style={styles.mainDetail}>
+            <Text>
+              WEIGHT
+            </Text>
+          </View>
         </View>
         <View style={styles.verticleLine}></View>
         <View>
@@ -117,16 +119,20 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
               }
             })
           }
-          <Text style={styles.mainDetail}>
-            TYPE
-          </Text>
+          <View style={styles.mainDetail}>
+            <Text>
+              TYPE
+            </Text>
+          </View>
         </View>
         <View style={styles.verticleLine}></View>
         <View>
           <Text style={styles.numbers}>{pokemon.height}m</Text>
-          <Text style={styles.mainDetail}>
-            HEIGHT
-          </Text>
+          <View style={styles.mainDetail}>
+            <Text>
+              HEIGHT
+            </Text>
+          </View>
         </View>
       </View>
       <View style={styles.mainDetail}>
@@ -233,6 +239,7 @@ const styles = StyleSheet.create({
       marginBottom: 20,
     },
     numbers: {
+      marginBottom: 5,
       fontSize: 24,
       color: '#31C283',
       fontWeight: 'bold',
@@ -245,9 +252,6 @@ const styles = StyleSheet.create({
     mainDetail: {
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    textContent: {
-
     },
 });
 

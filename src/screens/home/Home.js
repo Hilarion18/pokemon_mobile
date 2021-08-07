@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Component} from 'react';
-import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight, Animated} from 'react-native';
+import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight, Animated, ScrollView} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
@@ -56,136 +56,38 @@ const Home = ({ navigation }) => {
           style={styles.borderTitle}>
         </View>
       </View>
-      <View style={styles.itemContainer}>
-        {
-            list.map((l, i) => (
-            //   <ListItem
-            //   Component={TouchableScale}
-            //   friction={90} //
-            //   tension={100} // These props are passed to the parent component (here TouchableScale)
-            //   activeScale={0.95} //
-            //   linearGradientProps={{
-            //     colors: ['#FF9800', '#F44336'],
-            //     start: { x: 1, y: 0 },
-            //     end: { x: 0.2, y: 0 },
-            //   }}
-            //   ViewComponent={LinearGradient} // Only if no expo
-            // >
-            //   <Avatar rounded source={{ uri: l.avatar_url }} />
-            //   <ListItem.Content>
-            //     <ListItem.Title style={{ color: 'white', fontWeight: 'bold' }}>
-            //       Chris Jackson
-            //     </ListItem.Title>
-            //     <ListItem.Subtitle style={{ color: 'white' }}>
-            //       Vice Chairman
-            //     </ListItem.Subtitle>
-            //   </ListItem.Content>
-            //   <ListItem.Chevron color="white" />
-            // </ListItem>
-            <View
-              key={i}
-              >
-                <TouchableHighlight
-                  >
-                  <ListItem
-                    Component={TouchableScale}
-                    friction={90} //
-                    tension={100} // These props are passed to the parent component (here TouchableScale)
-                    activeScale={0.95} //
-                    style={styles.itemOption}
-                    onPress={() =>
-                      navigation.navigate(l.navigation)}
+      <ScrollView>
+        <View style={styles.itemContainer}>
+          {
+              list.map((l, i) => (
+              <View
+                key={i}
+                >
+                  <TouchableHighlight
                     >
-                      <ListItem.Content>
-                      <ListItem.Title>{l.text}</ListItem.Title>
-                      </ListItem.Content>
-                      <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
-                  </ListItem>
-                </TouchableHighlight>
-            </View>
-            ))
-        }
-      </View>
+                    <ListItem
+                      Component={TouchableScale}
+                      friction={90} //
+                      tension={100} // These props are passed to the parent component (here TouchableScale)
+                      activeScale={0.95} //
+                      style={styles.itemOption}
+                      onPress={() =>
+                        navigation.navigate(l.navigation)}
+                      >
+                        <ListItem.Content>
+                        <ListItem.Title>{l.text}</ListItem.Title>
+                        </ListItem.Content>
+                        <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
+                    </ListItem>
+                  </TouchableHighlight>
+              </View>
+              ))
+          }
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
-
-// export default function Home(props) {
-//     const dispatch = useDispatch();
-
-//     //1 - DECLARE VARIABLES
-//     const [isFetching, setIsFetching] = useState(false);
-
-//     //Access Redux Store State
-//     const dummyReducer = useSelector((state) => state.dummyReducer);
-//     const { data } = dummyReducer;
-    
-
-//     //==================================================================================================
-
-//     //2 - MAIN CODE BEGINS HERE
-//     useEffect(() => getData(), []);
-
-//     //==================================================================================================
-
-//     //3 - GET FLATLIST DATA
-//     const getData = () => {
-//         setIsFetching(true);
-//         let url = "https://my-json-server.typicode.com/mesandigital/demo/instructions";
-//         axios.get(url)
-//             .then(res => res.data)	
-//             .then((data) => dispatch(addData(data)))
-//             .catch(error => alert(error.message))
-//             .finally(() => setIsFetching(false));
-//     };
-
-//     const getPokemonList = () => {
-//         setIsFetching(true);
-//         let url = "https://my-json-server.typicode.com/mesandigital/demo/instructions";
-//         axios.get(url)
-//             .then(res => res.data)	
-//             .then((data) => dispatch(addData(data)))
-//             .catch(error => alert(error.message))
-//             .finally(() => setIsFetching(false));
-//     };
-   
-
-//     //==================================================================================================
-
-//     //4 - RENDER FLATLIST ITEM
-//     const renderItem = ({item, index}) => {
-//         return (
-//             <View style={styles.row}>
-//                 <Text style={styles.title}>
-//                     {(parseInt(index) + 1)}{". "}{item.title}
-//                 </Text>
-//                 <Text style={styles.description}>
-//                     {item.description}
-//                 </Text>
-//             </View>
-//         )
-//     };
-
-//     //==================================================================================================
-
-//     //5 - RENDER
-//     if (isFetching) {
-//         return (
-//             <View style={styles.activityIndicatorContainer}>
-//                 <ActivityIndicator animating={true}/>
-//             </View>
-//         );
-//     } else{
-//         return (
-//             <View style={{flex:1, backgroundColor: '#F5F5F5', paddingTop:20}}>
-//                 <FlatList
-//                     data={data}
-//                     renderItem={renderItem}
-//                     keyExtractor={(item, index) => `flat_${index}`}/>
-//             </View>
-//         );
-//     }
-// };
 
 const styles = StyleSheet.create({
     activityIndicatorContainer:{
