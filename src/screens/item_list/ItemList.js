@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Component} from 'react';
-import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight, Animated} from 'react-native';
+import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight, Animated, ScrollView} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
@@ -44,36 +44,42 @@ const ItemListView = ({ itemList, getAllItemList, navigation }) => {
           style={styles.borderTitle}>
         </View>
       </View>
-      <View style={styles.itemContainer}>
-      { 
-        itemList.length > 0
-          ?
-          itemList.map((l, i) => (
-          <View
-            key={i}
-            >
-              <TouchableHighlight
-                >
-                <ListItem
-                  Component={TouchableScale}
-                  friction={90} //
-                  tension={100} // These props are passed to the parent component (here TouchableScale)
-                  activeScale={0.95} //
-                  style={styles.itemOption}
-                  // onPress={() =>
-                  //   l.text === "List Pokemon" ? navigation.navigate('PokemonList') : navigation.navigate('ItemList') }
+      <ScrollView>
+        <View style={styles.itemContainer}>
+        { 
+          itemList.length > 0
+            ?
+            itemList.map((l, i) => (
+            <View
+              key={i}
+              >
+                <TouchableHighlight
                   >
-                    <ListItem.Content>
-                    <ListItem.Title>{l.name}</ListItem.Title>
-                    </ListItem.Content>
-                    <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
-                </ListItem>
-              </TouchableHighlight>
-          </View>
-          ))
-          : null
-        }
-      </View>
+                  <ListItem
+                    Component={TouchableScale}
+                    friction={90} //
+                    tension={100} // These props are passed to the parent component (here TouchableScale)
+                    activeScale={0.95} //
+                    style={styles.itemOption}
+                    onPress={() => {
+                      navigation.navigate("ItemDetail", {
+                        name: l.name,
+                        text: "text"
+                      });
+                    }}
+                    >
+                      <ListItem.Content>
+                      <ListItem.Title>{l.name}</ListItem.Title>
+                      </ListItem.Content>
+                      <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
+                  </ListItem>
+                </TouchableHighlight>
+            </View>
+            ))
+            : null
+          }
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

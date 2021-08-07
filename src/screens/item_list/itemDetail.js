@@ -15,37 +15,38 @@ import {addData} from "../../action";
 import { addPokemonList } from '../../models/pokemon_list/actions';
 import { GET_ALL_POKEMON_LIST } from '../../models/pokemon_list/actions';
 import { GET_POKEMONT_DETAIL } from '../../models/pokemon_detail/actions';
+import { GET_ITEM_DETAIL } from '../../models/item_detail/actions';
 import Svg, { SvgUri, Circle, Rect, SvgCssUri } from 'react-native-svg';
 import * as Progress from 'react-native-progress';
 
 const mapStateToProps = (state, props) => {
-  console.log("== mapStateToProps: ", state.pokemonDetail);
-  const pokemonDetail = state.pokemonDetail;
-  console.log("== mapStateToProps2: ", pokemonDetail);
+  console.log("== mapStateToProps: ", state.itemDetail);
+  const itemDetail = state.itemDetail;
+  console.log("== mapStateToProps2: ", itemDetail);
   return {
-    pokemon: state.pokemonDetail,
-    forms: JSON.parse(JSON.stringify(state.pokemonDetail.forms)),
+    item: state.itemDetail,
   };
 }
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getPokemonDetail: (name) => {
+  getItemDetail: (name) => {
     dispatch({
-      type: GET_POKEMONT_DETAIL,
+      type: GET_ITEM_DETAIL,
       payload: {},
-      pokemonName: name
+      itemName: name
     });
   },
 });
 
-const ItemDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation }) => {
-  console.log("== forms", forms);
+const ItemDetailView = ({ getItemDetail, item, route, navigation }) => {
+  console.log("== route.params", route.params);
+  console.log("== item", item);
   const { name } = route.params;
   let newName = ''
 
   useEffect(() => {
-    getPokemonDetail(name);
-  }, [getPokemonDetail]);
+    getItemDetail(name);
+  }, [getItemDetail]);
 
   const changeName = [...name].forEach((val, i) => {
     if (i === 0) {
@@ -53,13 +54,6 @@ const ItemDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation })
     }
     newName += val;
   })
-
-  const element = (data) => {
-    return (
-      <View style={styles.numbers}>{data.type.name}</View>
-    )
-  }
-
 
   return (
     <SafeAreaView>
@@ -72,60 +66,60 @@ const ItemDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation })
         <View
             style={[styles.areaImage]}
             >
-              <TouchableHighlight
-                >
-
-                <SvgCssUri
-                  height={120}
-                  width={120}
-                  style={styles.image}
-                  uri={
-                    pokemon?.sprites?.other?.dream_world?.front_default
-                      }
-                  />
-              </TouchableHighlight>
-              <Text style={styles.pokemonName}>
+            <TouchableHighlight
+              >
+              <Image source={{ uri: item?.sprites?.default}} style={styles.image} />
+              {/* <Image source={{ uri: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"}} style={styles.image} /> */}
+            </TouchableHighlight>
+              <Text style={styles.itemName}>
                 { newName }
               </Text>
             </View>
       </View>
+
       <View style={styles.experience}>
-        <Text style={styles.contentDetail}>
+        {/* <Text style={styles.contentDetail}>
           Experience: { pokemon.base_experience } %
-        </Text>
+        </Text> */}
+
         <View style={styles.contentDetail}>
-          <Progress.Bar progress={pokemon.base_experience/100} color="#31C283" width={200} />
+          <Progress.Bar progress={50/100} color="#31C283" width={200} />
         </View>
+
       </View>
       <View style={styles.ridesFriends}>
         <View>
-          <Text style={styles.numbers}>{pokemon.weight}kg</Text>
-          <Text style={styles.mainDetail}>
-            WEIGHT
-          </Text>
-        </View>
-        <View style={styles.verticleLine}></View>
-        <View>
-          {/* {
-            pokemon?.types?.map((val, i) => {
-              element(data)
-              // <Text style={styles.numbers}>{pokemon?.types[0]?.type?.name}</Text>
-            })
-          } */}
-          <Text style={styles.mainDetail}>
-            TYPE
-          </Text>
-        </View>
-        <View style={styles.verticleLine}></View>
-        <View>
-          <Text style={styles.numbers}>{pokemon.height}m</Text>
-          <Text style={styles.mainDetail}>
-            HEIGHT
-          </Text>
+          <Text style={styles.numbers}>{item?.cost} gold</Text>
+          <View style={styles.mainDetail}>
+            <Text>
+              COST
+            </Text>
+          </View>
         </View>
       </View>
+      <View style={styles.detailContainer}>
+        <Text style={styles.textContent}>
+          Category: { item?.category?.name }
+        </Text>
+      </View>
+      { item?.effect_entries.map((val, i) => {
+        if (i === 0) {
+          return (
+            <View
+              key={i}
+              >
+              <Text style={styles.textContent}>Effect: {val?.short_effect}</Text>
+            </View>
+          )
+        } else {
+          return (
+            null
+          )
+        }
+      })
+      }
       <View style={styles.mainDetail}>
-        <Text style={styles.pokemonName}>
+        <Text style={styles.itemName}>
           Details comming soon....
         </Text>
       </View>
@@ -205,7 +199,7 @@ const styles = StyleSheet.create({
       borderWidth: 3,
       borderColor: "#C4C4C4"
     },
-    pokemonName: {
+    itemName: {
       margin: 15,
       fontSize: 24,
       fontWeight: "400",
@@ -228,6 +222,7 @@ const styles = StyleSheet.create({
       marginBottom: 20,
     },
     numbers: {
+      marginBottom: 5,
       fontSize: 24,
       color: '#31C283',
       fontWeight: 'bold',
@@ -241,8 +236,15 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    detailContainer: {
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+    },
     textContent: {
-
+      margin: 10,
+      fontSize: 18,
+      fontWeight: "400",
+      color: "#6F6C6C"
     },
 });
 
