@@ -10,7 +10,6 @@ const pokemonListReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_POKEMON_LIST_SUCCESS: {
       const pokemonList = action.payload;
-      console.log("== pokemonInfo: ", action.payload);
       return pokemonList;
     }
     default:

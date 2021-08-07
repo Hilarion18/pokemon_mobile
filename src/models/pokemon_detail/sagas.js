@@ -16,7 +16,6 @@ function* getPokemonDetail(action) {
       endpoint: `pokemon/${action.pokemonName}`,
       method: 'GET',
     });
-    console.log("== posts:", posts)
 
     yield put({
       type: GET_POKEMONT_DETAIL_SUCCESS,

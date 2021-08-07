@@ -15,9 +15,7 @@ import { GET_ALL_ITEM_LIST } from '../../models/item_list/actions';
 
 
 const mapStateToProps = (state, props) => {
-  console.log("== mapStateToProps: ", state.items);
   const itemList = state.items;
-  console.log("== mapStateToProps2: ", itemList);
   return {itemList: state.items};
 }
 
@@ -31,7 +29,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 const ItemListView = ({ itemList, getAllItemList, navigation }) => {
-  console.log("== items: ", itemList)
 
   useEffect(() => {
     getAllItemList();

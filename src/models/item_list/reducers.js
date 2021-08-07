@@ -9,7 +9,6 @@ const itemListReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_ITEM_LIST_SUCCESS: {
       const itemList = action.payload;
-      console.log("== itemListReducer: ", action.payload);
       return itemList;
     }
     default:

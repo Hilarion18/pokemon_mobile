@@ -20,9 +20,7 @@ import Svg, { SvgUri, Circle, Rect, SvgCssUri } from 'react-native-svg';
 import * as Progress from 'react-native-progress';
 
 const mapStateToProps = (state, props) => {
-  console.log("== mapStateToProps: ", state.itemDetail);
   const itemDetail = state.itemDetail;
-  console.log("== mapStateToProps2: ", itemDetail);
   return {
     item: state.itemDetail,
   };
@@ -39,8 +37,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 const ItemDetailView = ({ getItemDetail, item, route, navigation }) => {
-  console.log("== route.params", route.params);
-  console.log("== item", item);
   const { name } = route.params;
   let newName = ''
 
@@ -82,9 +78,9 @@ const ItemDetailView = ({ getItemDetail, item, route, navigation }) => {
           Experience: { pokemon.base_experience } %
         </Text> */}
 
-        <View style={styles.contentDetail}>
+        {/* <View style={styles.contentDetail}>
           <Progress.Bar progress={50/100} color="#31C283" width={200} />
-        </View>
+        </View> */}
 
       </View>
       <View style={styles.ridesFriends}>
@@ -102,7 +98,7 @@ const ItemDetailView = ({ getItemDetail, item, route, navigation }) => {
           Category: { item?.category?.name }
         </Text>
       </View>
-      { item?.effect_entries.map((val, i) => {
+      { item?.effect_entries?.map((val, i) => {
         if (i === 0) {
           return (
             <View

@@ -11,7 +11,6 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_USER_INFO_REQUEST_SUCCESS: {
       const {id, name, email} = action.payload;
-      console.log("== userInfo: ", action.payload);
 
       return {
         id,

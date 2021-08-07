@@ -20,7 +20,6 @@ import { GET_ALL_POKEMON_LIST } from '../../models/pokemon_list/actions';
 
 const mapStateToProps = (state, props) => {
   const {id, name, email} = state.user;
-  console.log("== mapStateToProps: ", name)
 
   return {id, name, email};
 };
@@ -41,8 +40,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 const UserView = ({id, name, email, getAllUserInfo, getAllPokemonList, navigation}) => {
-  // navigation.navigate('Login')
-  console.log("== name", name);
 
   useEffect(() => {
     getAllUserInfo();
