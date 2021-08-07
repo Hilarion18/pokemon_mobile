@@ -1,33 +1,33 @@
 import {takeEvery, put, call, takeLatest, all} from 'redux-saga/effects';
 import {
-  GET_ALL_POKEMON_LIST,
-  GET_ALL_POKEMON_LIST_SUCCESS,
+  GET_ALL_ITEM_LIST,
+  GET_ALL_ITEM_LIST_SUCCESS,
 } from './actions';
 import { queryPokemonAPI } from '../query-api';
 
-function* pokemonListSaga() {
-  yield takeEvery(GET_ALL_POKEMON_LIST, getAllPokemonList);
+function* itemListSaga() {
+  yield takeEvery(GET_ALL_ITEM_LIST, getAllItemList);
 }
 
-function* getAllPokemonList(action) {
+function* getAllItemList(action) {
   console.log("action: ", action)
   try {
     // API call
     const posts = yield call(queryPokemonAPI, {
-      endpoint: 'pokemon/',
+      endpoint: 'item/',
       method: 'GET',
     });
     console.log("== posts:", posts)
 
     yield put({
-      type: GET_ALL_POKEMON_LIST_SUCCESS,
+      type: GET_ALL_ITEM_LIST_SUCCESS,
       payload: posts
     });
   } catch (err) {
-    yield put({type: "GET_ALL_POKEMON_LIST_FAILURE", message: err.message});
+    yield put({type: "GET_ALL_ITEM_LIST_FAILURE", message: err.message});
     // Handle error
   }
 }
 export {
-  pokemonListSaga,
+  itemListSaga,
 };
