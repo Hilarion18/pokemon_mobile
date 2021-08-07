@@ -16,6 +16,7 @@ import { addPokemonList } from '../../models/pokemon_list/actions';
 import { GET_ALL_POKEMON_LIST } from '../../models/pokemon_list/actions';
 import { GET_POKEMONT_DETAIL } from '../../models/pokemon_detail/actions';
 import Svg, { SvgUri, Circle, Rect, SvgCssUri } from 'react-native-svg';
+import * as Progress from 'react-native-progress';
 
 const mapStateToProps = (state, props) => {
   console.log("== mapStateToProps: ", state.pokemonDetail);
@@ -82,24 +83,39 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
               </Text>
             </View>
       </View>
-      <View>
-        <Text>
-          Experience: { pokemon.base_experience }
+      <View style={styles.experience}>
+        <Text style={styles.contentDetail}>
+          Experience: { pokemon.base_experience } %
         </Text>
-        <Text>
-          Height: { pokemon.height }"
-        </Text>
-        <Text>
-          { pokemon.location_area_encounters }
-        </Text>
-        <Text>
-          Weight: { pokemon.weight }
-        </Text>
-        <Text>
-          Name: { pokemon.name }
-        </Text>
-        <Text>
-          { pokemon.order }
+        <View style={styles.contentDetail}>
+          <Progress.Bar progress={pokemon.base_experience/100} color="#31C283" width={200} />
+        </View>
+      </View>
+      <View style={styles.ridesFriends}>
+        <View>
+          <Text style={styles.numbers}>{pokemon.weight}kg</Text>
+          <Text style={styles.mainDetail}>
+            WEIGHT
+          </Text>
+        </View>
+        <View style={styles.verticleLine}></View>
+        <View>
+          <Text style={styles.numbers}>{pokemon?.types[0]?.type?.name}</Text>
+          <Text style={styles.mainDetail}>
+            TYPE
+          </Text>
+        </View>
+        <View style={styles.verticleLine}></View>
+        <View>
+          <Text style={styles.numbers}>{pokemon.height}m</Text>
+          <Text style={styles.mainDetail}>
+            HEIGHT
+          </Text>
+        </View>
+      </View>
+      <View style={styles.mainDetail}>
+        <Text style={styles.pokemonName}>
+          Details comming soon....
         </Text>
       </View>
     </SafeAreaView>
@@ -112,24 +128,15 @@ PokemonDetailScreen = connect(
 )(PokemonDetailView)
 
 const styles = StyleSheet.create({
-    activityIndicatorContainer:{
-        backgroundColor: "#fff",
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-    },
-
     row:{
         borderBottomWidth: 1,
         borderColor: "#ccc",
         padding: 10
     },
-
     title:{
         fontSize: 15,
         fontWeight: "600"
     },
-
     description:{
         marginTop: 5,
         fontSize: 14,
@@ -192,7 +199,40 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: "400",
       color: "#6F6C6C"
-    }
+    },
+    experience: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    contentDetail: {
+      paddingTop: 5,
+      paddingBottom: 5
+    },
+    ridesFriends: {
+      paddingTop: 20,
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      width: '100%',
+      marginBottom: 20,
+    },
+    numbers: {
+      fontSize: 24,
+      color: '#31C283',
+      fontWeight: 'bold',
+    },
+    verticleLine: {
+      height: '100%',
+      width: 1,
+      backgroundColor: '#909090',
+    },
+    mainDetail: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textContent: {
+
+    },
 });
 
 export default PokemonDetailScreen;

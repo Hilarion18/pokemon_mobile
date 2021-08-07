@@ -34,9 +34,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 const PokemonListView = ({ pokemonList, getAllPokemonList, navigation }) => {
-  console.log("== pokemons: ", pokemonList)
-  console.log("== navigation: ", navigation)
-  // const navigation = useNavigation();
 
   useEffect(() => {
     getAllPokemonList();
