@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PokemonListScreen from './screens/pokemon_list/PokemonList';
 import ItemList from './screens/item_list/ItemList';
 import { UserScreen } from './screens/user/UserScreen';
+import PokemonDetailScreen from './screens/pokemon_list/PokemonDetail';
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,19 @@ export default class App extends Component {
                 // height: 0
               },
             }}
+          />
+          <Stack.Screen
+            name="PokemonDetail"
+            component={PokemonDetailScreen}
+            options={{
+              title: "",
+              headerTintColor: '#6F6C6C',
+              headerStyle: {
+                backgroundColor: '##FCFCFD'
+                // height: 0
+              },
+            }}
+            // initialParams={{'key':'value'}}
           />
         </Stack.Navigator>
         </NavigationContainer>

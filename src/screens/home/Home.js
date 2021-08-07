@@ -41,11 +41,11 @@ const Home = ({ navigation }) => {
       text: "List Item",
       navigation: "ItemList"
     },
-    {
-      id: "3",
-      text: "User",
-      navigation: "UserScreen"
-    },
+    // {
+    //   id: "3",
+    //   text: "User",
+    //   navigation: "UserScreen"
+    // },
   ];
 
   return (

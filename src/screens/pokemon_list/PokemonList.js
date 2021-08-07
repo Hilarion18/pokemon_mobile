@@ -10,6 +10,7 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconIonIcon from 'react-native-vector-icons/Ionicons'
 import axios from 'axios'; //Only import if using api
 import { connect } from 'react-redux'
+import { useNavigation } from '@react-navigation/native';
 
 import {addData} from "../../action";
 import { addPokemonList } from '../../models/pokemon_list/actions';
@@ -33,7 +34,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 const PokemonListView = ({ pokemonList, getAllPokemonList, navigation }) => {
-  console.log("== pokemons: ", pokemonList)
 
   useEffect(() => {
     getAllPokemonList();
@@ -62,6 +62,20 @@ const PokemonListView = ({ pokemonList, getAllPokemonList, navigation }) => {
                     tension={100} // These props are passed to the parent component (here TouchableScale)
                     activeScale={0.95} //
                     style={styles.itemOption}
+                    onPress={() => {
+                      navigation.navigate("PokemonDetail", {
+                        name: l.name,
+                        text: "text"
+                      });
+                      // navigation.push('PokemonDetail', {
+                      //   component: {
+                      //     name: 'PokemonDetail',
+                      //     passProps: {
+                      //       name: l.name
+                      //     }
+                      //   }
+                      // })
+                    }}
                     // onPress={() =>
                     //   l.text === "List Pokemon" ? navigation.navigate('PokemonList') : navigation.navigate('ItemList') }
                     >

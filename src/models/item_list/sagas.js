@@ -10,14 +10,12 @@ function* itemListSaga() {
 }
 
 function* getAllItemList(action) {
-  console.log("action: ", action)
   try {
     // API call
     const posts = yield call(queryPokemonAPI, {
       endpoint: 'item/',
       method: 'GET',
     });
-    console.log("== posts:", posts)
 
     yield put({
       type: GET_ALL_ITEM_LIST_SUCCESS,
