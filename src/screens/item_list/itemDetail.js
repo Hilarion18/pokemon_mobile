@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
 });
 
-const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation }) => {
+const ItemDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation }) => {
   console.log("== forms", forms);
   const { name } = route.params;
   let newName = ''
@@ -53,6 +53,13 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
     }
     newName += val;
   })
+
+  const element = (data) => {
+    return (
+      <View style={styles.numbers}>{data.type.name}</View>
+    )
+  }
+
 
   return (
     <SafeAreaView>
@@ -82,14 +89,13 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
               </Text>
             </View>
       </View>
-      
       <View style={styles.experience}>
         <Text style={styles.contentDetail}>
           Experience: { pokemon.base_experience } %
         </Text>
-        {/* <View style={styles.contentDetail}>
+        <View style={styles.contentDetail}>
           <Progress.Bar progress={pokemon.base_experience/100} color="#31C283" width={200} />
-        </View> */}
+        </View>
       </View>
       <View style={styles.ridesFriends}>
         <View>
@@ -100,23 +106,12 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
         </View>
         <View style={styles.verticleLine}></View>
         <View>
-          {
+          {/* {
             pokemon?.types?.map((val, i) => {
-              if (i === 0) {
-                return (
-                  <View
-                    key={i}
-                    >
-                    <Text style={styles.numbers}>{pokemon?.types[0]?.type?.name.toUpperCase()}</Text>
-                  </View>
-                )
-              } else {
-                return (
-                  null
-                )
-              }
+              element(data)
+              // <Text style={styles.numbers}>{pokemon?.types[0]?.type?.name}</Text>
             })
-          }
+          } */}
           <Text style={styles.mainDetail}>
             TYPE
           </Text>
@@ -138,10 +133,10 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
   );
 }
 
-PokemonDetailScreen = connect(
+ItemDetailScreen = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PokemonDetailView)
+)(ItemDetailView)
 
 const styles = StyleSheet.create({
     row:{
@@ -251,4 +246,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PokemonDetailScreen;
+export default ItemDetailScreen;
