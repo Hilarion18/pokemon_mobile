@@ -47,7 +47,9 @@ const PokemonListView = ({ pokemonList, getAllPokemonList, navigation }) => {
         </View>
       </View>
       <View style={styles.itemContainer}>
-        {
+        { 
+          pokemonList.length > 0
+            ?
             pokemonList.map((l, i) => (
             <View
               key={i}
@@ -71,6 +73,7 @@ const PokemonListView = ({ pokemonList, getAllPokemonList, navigation }) => {
                 </TouchableHighlight>
             </View>
             ))
+            : null
         }
       </View>
     </SafeAreaView>

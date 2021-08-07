@@ -1,109 +1,150 @@
-import React, {Component} from 'react';
-import ReactNative from 'react-native';
+import React, {useEffect, useState, Component} from 'react';
+import { FlatList, StyleSheet, View, Text, ActivityIndicator, SafeAreaView, TouchableHighlight, Animated} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { ListItem, Avatar } from 'react-native-elements'
+import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import IconIonIcon from 'react-native-vector-icons/Ionicons'
+import axios from 'axios'; //Only import if using api
+import { connect } from 'react-redux'
 
-const {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  Animated
-} = ReactNative;
-
-
-var isHidden = true;
-
-class ItemListScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      bounceValue: new Animated.Value(100),  //This is the initial position of the subview
-      buttonText: "Show Subview"
-    };
-  }
+import { GET_ALL_ITEM_LIST } from '../../models/item_list/actions';
 
 
-  _toggleSubview() {    
-    this.setState({
-      buttonText: !isHidden ? "Show Subview" : "Hide Subview"
-    });
-
-    var toValue = 100;
-
-    if(isHidden) {
-      toValue = 0;
-    }
-
-    //This will animate the transalteY of the subview between 0 & 100 depending on its current state
-    //100 comes from the style below, which is the height of the subview.
-    Animated.spring(
-      this.state.bounceValue,
-      {
-        toValue: toValue,
-        velocity: 3,
-        tension: 2,
-        friction: 8,
-        useNativeDriver: true
-      }
-    ).start();
-
-    Animated.timing(this.state.animatedValue, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true, // Add this line
-      }).start();
-      
-    isHidden = !isHidden;
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-          <TouchableHighlight style={styles.button} onPress={()=> {this._toggleSubview()}}>
-            <Text style={styles.buttonText}>{this.state.buttonText}</Text>
-          </TouchableHighlight>
-          <Animated.View
-            style={[styles.subView,
-              {transform: [{translateY: this.state.bounceValue}]}]}
-          >
-            <Text>This is a sub view</Text>
-          </Animated.View>
-          {/* <Animated.ScrollView
-            scrollEventThrottle={1}
-            onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: this.state.animatedValue } } }],
-                { useNativeDriver: true } // Add this line
-            )}
-            >
-            {content}
-        </Animated.ScrollView> */}
-      </View>
-    );
-  }
+const mapStateToProps = (state, props) => {
+  console.log("== mapStateToProps: ", state.items);
+  const itemList = state.items;
+  console.log("== mapStateToProps2: ", itemList);
+  return {itemList: state.items};
 }
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    marginTop: 66
+const mapDispatchToProps = (dispatch, props) => ({
+  getAllItemList: () => {
+    dispatch({
+      type: GET_ALL_ITEM_LIST,
+      payload: [],
+    });
   },
-  button: {
-    padding: 8,
-  },
-  buttonText: {
-    fontSize: 17,
-    color: "#007AFF"
-  },
-  subView: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#FFFFFF",
-    height: 100,
-  }
+});
+
+const ItemListView = ({ itemList, getAllItemList, navigation }) => {
+  console.log("== items: ", itemList)
+
+  useEffect(() => {
+    getAllItemList();
+  }, [getAllItemList]);
+
+  return (
+    <SafeAreaView>
+      <View>
+        <View
+          style={styles.borderTitle}>
+        </View>
+      </View>
+      <View style={styles.itemContainer}>
+      { 
+        itemList.length > 0
+          ?
+          itemList.map((l, i) => (
+          <View
+            key={i}
+            >
+              <TouchableHighlight
+                >
+                <ListItem
+                  Component={TouchableScale}
+                  friction={90} //
+                  tension={100} // These props are passed to the parent component (here TouchableScale)
+                  activeScale={0.95} //
+                  style={styles.itemOption}
+                  // onPress={() =>
+                  //   l.text === "List Pokemon" ? navigation.navigate('PokemonList') : navigation.navigate('ItemList') }
+                  >
+                    <ListItem.Content>
+                    <ListItem.Title>{l.name}</ListItem.Title>
+                    </ListItem.Content>
+                    <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
+                </ListItem>
+              </TouchableHighlight>
+          </View>
+          ))
+          : null
+        }
+      </View>
+    </SafeAreaView>
+  );
+}
+
+ItemListScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ItemListView)
+
+const styles = StyleSheet.create({
+    activityIndicatorContainer:{
+        backgroundColor: "#fff",
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+    },
+
+    row:{
+        borderBottomWidth: 1,
+        borderColor: "#ccc",
+        padding: 10
+    },
+
+    title:{
+        fontSize: 15,
+        fontWeight: "600"
+    },
+
+    description:{
+        marginTop: 5,
+        fontSize: 14,
+    },
+    borderTitle: {
+      borderBottomColor: '#6F6C6C',
+      borderBottomWidth: 1,
+      opacity: 0.5,
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+    },
+    titleHead: {
+      paddingLeft: 24,
+      paddingTop: 10,
+      paddingBottom: 10,
+      fontSize: 24,
+      color: '#6F6C6C',
+    },
+    itemContainer: {
+      marginTop: 10,
+      marginRight: 24,
+      marginLeft: 24,
+      marginBottom: 10,
+    },
+    itemOption: {
+      marginTop: 10,
+      borderColor: "#6F6C6C",
+      borderWidth: 1,
+      borderRadius: 10,
+      overflow: 'hidden',
+      shadowOffset: {
+        height: 1,
+        width: 1
+      },
+      shadowRadius: 2,
+      shadowColor: '#000000',
+      elevation: 4,
+      opacity: 0.8,
+    }
 });
 
 export default ItemListScreen;
