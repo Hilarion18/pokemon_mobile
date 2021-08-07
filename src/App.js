@@ -10,6 +10,7 @@ import PokemonListScreen from './screens/pokemon_list/PokemonList';
 import ItemList from './screens/item_list/ItemList';
 import { UserScreen } from './screens/user/UserScreen';
 import PokemonDetailScreen from './screens/pokemon_list/PokemonDetail';
+import ItemDetailScreen from './screens/item_list/itemDetail';
 
 const Stack = createStackNavigator();
 
@@ -27,20 +28,9 @@ export default class App extends Component {
               headerTintColor: '#6F6C6C',
               headerStyle: {
                 backgroundColor: '##FCFCFD'
-                // height: 0
               },
               headerTitleStyle: {
-                // alignSelf: 'flex-start',
-                // fontFamily: "",
-                // fontWeight: "600"
               },
-              // headerLeft: () =>
-              //   <Icon
-              //     onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-              //     style={[{ color: 'white', marginLeft: 8 }]}
-              //     size={24}
-              //     name={'menu'}
-              //   />
             }}
           />
           <Stack.Screen
@@ -90,7 +80,18 @@ export default class App extends Component {
                 // height: 0
               },
             }}
-            // initialParams={{'key':'value'}}
+          />
+          <Stack.Screen
+            name="ItemDetail"
+            component={ItemDetailScreen}
+            options={{
+              title: "",
+              headerTintColor: '#6F6C6C',
+              headerStyle: {
+                backgroundColor: '##FCFCFD'
+                // height: 0
+              },
+            }}
           />
         </Stack.Navigator>
         </NavigationContainer>
