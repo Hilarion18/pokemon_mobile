@@ -20,7 +20,7 @@ const mapStateToProps = (state, props) => {
   console.log("== mapStateToProps: ", state.pokemons);
   const pokemons = state.pokemons;
   console.log("== mapStateToProps2: ", pokemons);
-  return pokemons;
+  return {pokemonList: state.pokemons};
 }
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -32,10 +32,8 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
 });
 
-const PokemonListView = ({ pokemons, pokemonList, payload, getAllPokemonList, navigation }) => {
-  console.log("== pokemons: ", pokemons)
+const PokemonListView = ({ pokemonList, getAllPokemonList, navigation }) => {
   console.log("== pokemons: ", pokemonList)
-  console.log("== pokemons: ", payload)
 
   useEffect(() => {
     getAllPokemonList();
@@ -48,9 +46,9 @@ const PokemonListView = ({ pokemons, pokemonList, payload, getAllPokemonList, na
           style={styles.borderTitle}>
         </View>
       </View>
-      {/* <View style={styles.itemContainer}>
+      <View style={styles.itemContainer}>
         {
-            pokemons.pokemonList.map((l, i) => (
+            pokemonList.map((l, i) => (
             <View
               key={i}
               >
@@ -74,7 +72,7 @@ const PokemonListView = ({ pokemons, pokemonList, payload, getAllPokemonList, na
             </View>
             ))
         }
-      </View> */}
+      </View>
     </SafeAreaView>
   );
 }
