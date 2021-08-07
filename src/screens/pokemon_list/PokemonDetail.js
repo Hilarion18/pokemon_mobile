@@ -52,7 +52,6 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
     }
     newName += val;
   })
-  let artWork = {}
 
 
   return (
@@ -61,10 +60,6 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
         <View
           style={styles.borderTitle}>
         </View>
-      </View>
-
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator color={""} />
       </View>
       <View>
         <View
@@ -106,37 +101,6 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
         <Text>
           { pokemon.order }
         </Text>
-        {/* {
-          forms.map((l, i) => (
-            <View
-              key={i}
-              >
-                <TouchableHighlight
-                  >
-                  <ListItem
-                    Component={TouchableScale}
-                    friction={90} //
-                    tension={100} // These props are passed to the parent component (here TouchableScale)
-                    activeScale={0.95} //
-                    style={styles.itemOption}
-                    onPress={() => {
-                      // navigation.navigate("PokemonDetail", {
-                      //   name: l.name,
-                      //   text: "text"
-                      // });
-                    }}
-                    // onPress={() =>
-                    //   l.text === "List Pokemon" ? navigation.navigate('PokemonList') : navigation.navigate('ItemList') }
-                    >
-                      <ListItem.Content>
-                      <ListItem.Title>{l.url}</ListItem.Title>
-                      </ListItem.Content>
-                      <IconIonIcon name="chevron-forward-outline"></IconIonIcon>
-                  </ListItem>
-                </TouchableHighlight>
-            </View>
-            ))
-        } */}
       </View>
     </SafeAreaView>
   );
