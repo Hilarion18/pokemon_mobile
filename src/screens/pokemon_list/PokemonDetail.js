@@ -54,13 +54,6 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
     newName += val;
   })
 
-  const element = (data) => {
-    return (
-      <View style={styles.numbers}>{data.type.name}</View>
-    )
-  }
-
-
   return (
     <SafeAreaView>
       <View>
@@ -108,8 +101,19 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
         <View>
           {
             pokemon?.types?.map((val, i) => {
-              // element(data)
-              // <Text style={styles.numbers}>{pokemon?.types[0]?.type?.name}</Text>
+              if (i === 0) {
+                return (
+                  <View
+                    key={i}
+                    >
+                    <Text style={styles.numbers}>{pokemon?.types[0]?.type?.name.toUpperCase()}</Text>
+                  </View>
+                )
+              } else {
+                return (
+                  null
+                )
+              }
             })
           }
           <Text style={styles.mainDetail}>
