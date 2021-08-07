@@ -10,14 +10,12 @@ function* pokemonListSaga() {
 }
 
 function* getAllPokemonList(action) {
-  console.log("action: ", action)
   try {
     // API call
     const posts = yield call(queryPokemonAPI, {
       endpoint: 'pokemon/',
       method: 'GET',
     });
-    console.log("== posts:", posts)
 
     yield put({
       type: GET_ALL_POKEMON_LIST_SUCCESS,

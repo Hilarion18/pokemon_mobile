@@ -17,6 +17,9 @@ function* queryPokemonAPI({endpoint, method, body = null}) {
     }),
   });
 
+  // const data = yield call([res, res.json])
+  // return data.results ? data.results : data;
+
   if (res.status === 401) {
     // Log the user out
     // Explain that they need to log back in
@@ -26,8 +29,7 @@ function* queryPokemonAPI({endpoint, method, body = null}) {
   if (!res.ok) {
     // Handle bad response here
   }
-
-  return parsedResponse.results;
+  return parsedResponse.results ? parsedResponse.results : parsedResponse;
 }
 
 const pokemonRequest = async ({endpoint, method, headers, body = null}) => {
@@ -79,9 +81,10 @@ const makeRequest = async ({endpoint, method, headers, body = null}) => {
 const parseResponse = async response => {
   let parsedResponse;
   try {
-    parsedResponse = await response.clone().json();
-    console.log("== parsedResponse: ", parsedResponse)
-  } catch {
+    parsedResponse = await response.json();
+    // console.log("== parsedResponse: ", parsedResponse)
+  } catch (e){
+    console.log("== catch", e)
     parsedResponse = await response.text();
   }
 
