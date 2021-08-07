@@ -15,7 +15,7 @@ import {addData} from "../../action";
 import { addPokemonList } from '../../models/pokemon_list/actions';
 import { GET_ALL_POKEMON_LIST } from '../../models/pokemon_list/actions';
 import { GET_POKEMONT_DETAIL } from '../../models/pokemon_detail/actions';
-
+import Svg, { SvgUri, Circle, Rect, SvgCssUri } from 'react-native-svg';
 
 const mapStateToProps = (state, props) => {
   console.log("== mapStateToProps: ", state.pokemonDetail);
@@ -37,17 +37,10 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
 });
 
-const replaceName = ((index, replacement) => {
-  return this.substr(0, index) + replacement + this.substr(index + replacement.length);
-})
-
-
 const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation }) => {
   console.log("== forms", forms);
   const { name } = route.params;
   let newName = ''
-  // const [imageUrl, setImageUrl] = useState("r");
-  // setImageUrl(forms[forms.length-1].url);
 
   useEffect(() => {
     getPokemonDetail(name);
@@ -69,55 +62,31 @@ const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation
           style={styles.borderTitle}>
         </View>
       </View>
+
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator color={""} />
+      </View>
       <View>
-        <Text>
-          {JSON.stringify(pokemon?.sprites?.other?.dream_world?.front_default)}
-          {/* {JSON.stringify(pokemon.sprites)} */}
-          {/* {pokemon.sprites} */}
-        </Text>
         <View
             style={[styles.areaImage]}
             >
               <TouchableHighlight
                 >
-                {/* <Image source={{ uri: JSON.stringify(pokemon?.sprites?.other?.dream_world?.front_default) }} style={styles.image} /> */}
-                <Image source={{ uri: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"}} style={styles.image} />
+
+                <SvgCssUri
+                  height={120}
+                  width={120}
+                  style={styles.image}
+                  uri={
+                    pokemon?.sprites?.other?.dream_world?.front_default
+                      }
+                  />
               </TouchableHighlight>
               <Text style={styles.pokemonName}>
                 { newName }
               </Text>
             </View>
       </View>
-      {
-        pokemon && forms !== undefined && forms !== null
-        ? 
-        forms.map((val, i) => {
-          console.log("== val", val.url)
-          if ( i === forms.length-1 ) {
-          return (
-            <View
-            style={[styles.areaImage]}
-            key={i}
-            >
-              <TouchableHighlight
-                >
-                <Image source={{ uri: val.url }} style={styles.image} />
-                {/* <Image source={{ uri: forms[forms.length-1].url}} style={styles.profileImg} /> */}
-              </TouchableHighlight>
-              <Text style={styles.pokemonName}>
-                { newName }
-              </Text>
-            </View>
-            )
-          }
-          else {
-            return (
-              null
-            )
-          }
-        })
-        : null
-      }
       <View>
         <Text>
           Experience: { pokemon.base_experience }
