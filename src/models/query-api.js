@@ -82,9 +82,8 @@ const parseResponse = async response => {
   let parsedResponse;
   try {
     parsedResponse = await response.json();
-    // console.log("== parsedResponse: ", parsedResponse)
   } catch (e){
-    console.log("== catch", e)
+    // console.log("== catch", e)
     parsedResponse = await response.text();
   }
 

@@ -10,13 +10,11 @@ function* userSaga() {
 }
 
 function* getAllUserInfo(action) {
-  console.log("action: ", action)
   try {
     const posts = yield call(queryApi, {
       endpoint: '',
       method: 'GET',
     });
-    console.log("== posts:", posts)
 
     // API call
     yield put({
@@ -28,7 +26,7 @@ function* getAllUserInfo(action) {
       },
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     // Handle error
   }
 }

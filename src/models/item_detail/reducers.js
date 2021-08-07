@@ -9,7 +9,6 @@ const itemDetailReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEM_DETAIL_SUCCESS: {
       const itemDetail = action.payload;
-      console.log("== itemDetailReducer: ", action.payload);
       return itemDetail;
     }
     default:

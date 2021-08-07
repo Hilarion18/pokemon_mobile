@@ -19,9 +19,7 @@ import Svg, { SvgUri, Circle, Rect, SvgCssUri } from 'react-native-svg';
 import * as Progress from 'react-native-progress';
 
 const mapStateToProps = (state, props) => {
-  console.log("== mapStateToProps: ", state.pokemonDetail);
   const pokemonDetail = state.pokemonDetail;
-  console.log("== mapStateToProps2: ", pokemonDetail);
   return {
     pokemon: state.pokemonDetail,
     forms: JSON.parse(JSON.stringify(state.pokemonDetail.forms)),
@@ -39,7 +37,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 const PokemonDetailView = ({ getPokemonDetail, pokemon, forms, route, navigation }) => {
-  console.log("== forms", forms);
   const { name } = route.params;
   let newName = ''
 
