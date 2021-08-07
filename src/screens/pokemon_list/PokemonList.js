@@ -18,9 +18,9 @@ import { GET_ALL_POKEMON_LIST } from '../../models/pokemon_list/actions';
 
 const mapStateToProps = (state, props) => {
   console.log("== mapStateToProps: ", state.pokemons);
-  const pokemonList = state.pokemons;
-  console.log("== mapStateToProps2: ", pokemonList);
-  return pokemonList;
+  const pokemons = state.pokemons;
+  console.log("== mapStateToProps2: ", pokemons);
+  return pokemons;
 }
 
 const mapDispatchToProps = (dispatch, props) => ({
