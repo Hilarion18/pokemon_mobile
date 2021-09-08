@@ -1,0 +1,98 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+PROJECT_NAME = "Pokemon Mobile".freeze
+
+platform :ios do
+  desc "Fetch certificates and provisioning profiles for Staging Release"
+  private_lane :match_staging_certificate do
+    match(
+      app_identifier: "pokemon_mobile.xcodeproj",
+      type: "development",
+      readonly: true
+    )
+    sync_code_signing(
+      type: "development"
+    )
+  end
+
+  desc "Fetch certificates and provisioning profiles for Public Release"
+  private_lane :match_release_certificate do
+    match(
+      app_identifier: "pokemon_mobile.xcodeproj",
+      type: "appstore",
+      readonly: true
+    )
+    sync_code_signing(
+      type: "appstore"
+    )
+  end
+
+  desc "Fetch and upload dSYM files to Firebase Crashlytics"
+  private_lane :refresh_dsyms_firebase do
+    # upload_symbols_to_crashlytics(
+    #   dsym_path: lane_context[SharedValues::DSYM_OUTPUT_PATH],
+    #   gsp_path: './Runner/GoogleService-info.plist',
+    #   binary_path: './Pods/FirebaseCrashlytics/upload-symbols'
+    # )
+  end
+
+  desc "Ship to TestFlight"
+  lane :beta do
+    #match_release_certificate
+    build(
+      release: true,
+      export_method: "app-store"
+    )
+    upload_to_testflight(
+      username: "hilarioncross@gmail.com",
+      skip_waiting_for_build_processing: true
+    )
+    refresh_dsyms_firebase
+  end
+
+  desc "Ship to TestFlight development"
+  lane :development do
+    #match_release_certificate
+    build(
+      release: false,
+      export_method: "ad-hoc"
+    )
+    upload_to_testflight(
+      username: "hilarioncross@gmail.com",
+      skip_waiting_for_build_processing: true
+    )
+    refresh_dsyms_firebase
+  end
+
+  desc "Build the IOS application"
+  private_lane :build do |options|
+    clean_build_artifacts
+    configuration = (options[:release] ? "Release" : "Internal")
+    scheme = (options[:release] ? "Release" : "Internal")
+    increment_build_number
+    gym(
+      workspace: "pokemon_mobile.xcworkspace",
+      configuration: configuration,
+      scheme: scheme,
+      include_symbols: true,
+      clean: true,
+      silent: true,
+      export_method: options[:export_method]
+    )
+  end
+end
